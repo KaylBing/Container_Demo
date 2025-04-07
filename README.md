@@ -1,2 +1,7 @@
 # Container_Demo
-Demo for seminar
+
+All containers in this file can be built with
+
+apptainer build name.sif name.def
+
+

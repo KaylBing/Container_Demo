@@ -1,0 +1,9 @@
+Bootstrap: docker
+From: jupyter/minimal-notebook:latest
+
+%post
+    pip install --upgrade matplotlib pandas
+
+%runscript
+    echo "Starting Jupyter Notebook on port 8888..."
+    exec jupyter notebook --ip=0.0.0.0 --no-browser
