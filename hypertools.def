@@ -1,0 +1,36 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+	# Could also be setup per software as headless mode #
+    export DEBIAN_FRONTEND=noninteractive
+
+    apt-get update -y
+    apt-get install -y --no-install-recommends \
+        python3 \
+        python3-pip \
+        python3-dev \
+        git \
+        wget
+
+    # Install stuff #
+    pip3 install --upgrade pip
+    pip3 install hypertools numpy scipy pandas matplotlib jupyterlab
+
+    # Clean up #
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%runscript
+    # Default: Launch Jupyter Lab if no args #
+    if [ $# -eq 0 ]; then
+        echo "Starting Jupyter Lab on port 8888..."
+        exec jupyter lab --ip=0.0.0.0 --no-browser
+    else
+        exec "$@"
+    fi
+
+%labels
+    Author McKayl U.
+    Version v1.0
+    Description "Hypertools + Scientific Python (Jupyter, NumPy, Matplotlib)"
